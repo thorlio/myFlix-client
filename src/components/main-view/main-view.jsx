@@ -7,6 +7,7 @@ export const MainView = () => {
   const [user, setUser] = useState(null);
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [token, setToken] = useState(null);
 
   useEffect (() => {
     fetch("https://flixandchill-0e85c940608d.herokuapp.com/movies")
@@ -31,7 +32,14 @@ export const MainView = () => {
   }, []);
 
   if (!user) {
-    return <LoginView onLoggedIn={(user) => setUser(user)} />;
+    return (
+      <LoginView
+        onLoggedIn={(user, token) => {
+          setUser(user);
+          setToken(token);
+        }}
+      />
+    );
   }
   
   if (selectedBook) {
@@ -39,6 +47,8 @@ export const MainView = () => {
       <MovieView book={selectedBook} onBackClick={() => setSelectedBook(null)} />
     );
   }
+
+  <button onClick={() => { setUser(null); }}>Logout</button>
 
   if (books.length === 0) {
     return <div>The list is empty!</div>;
@@ -60,4 +70,3 @@ export const MainView = () => {
 
 };
 
-<button onClick={() => { setUser(null); }}>Logout</button>
