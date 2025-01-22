@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BookCard } from "../book-card/book-card";
+import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
 import { LoginView } from "../login-view/login-view";
 import { SignupView } from "../signup-view/signup-view";
@@ -9,8 +9,8 @@ export const MainView = () => {
   const storedToken = localStorage.getItem("token");
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
-  const [books, setBooks] = useState([]);
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [movies, setMovies] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
     if (!token) return;
@@ -52,26 +52,26 @@ export const MainView = () => {
     );
   }
   
-  if (selectedBook) {
+  if (selectedMovie) {
     return (
-      <MovieView book={selectedBook} onBackClick={() => setSelectedBook(null)} />
+      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
     );
   }
 
   <button onClick={() => { setUser(null); setToken(null); localStorage.clear(); }}>Logout</button>
 
-  if (books.length === 0) {
+  if (movies.length === 0) {
     return <div>The list is empty!</div>;
   }
 
   return (
     <div>
-      {books.map((book) => (
-        <BookCard
-          key={book.id}
-          book={book}
-          onBookClick={(newSelectedBook) => {
-            setSelectedBook(newSelectedBook);
+      {movies.map((movie) => (
+        <MovieCard
+          key={movie.id}
+          movie={movie}
+          onMovieClick={(newSelectedMovie) => {
+            setSelectedMovie(newSelectedMovie);
           }}
         />
       ))}
